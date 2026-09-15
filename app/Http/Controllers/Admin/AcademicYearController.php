@@ -44,4 +44,37 @@ class AcademicYearController extends Controller
 
         return back()->with('success', "Tahun ajaran '{$academicYear->name}' sekarang aktif.");
     }
+
+    public function update(Request $request, AcademicYear $academicYear)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:50',
+            'start_year' => 'required|integer',
+            'end_year' => 'required|integer|gte:start_year',
+        ]);
+
+        $academicYear->update($validated);
+
+        ActivityLog::record('ADMIN_AY_UPDATED', "Admin memperbarui tahun ajaran '{$academicYear->name}'.", auth('web')->user());
+
+        return back()->with('success', 'Tahun ajaran berhasil diperbarui.');
+    }
+
+    public function destroy(AcademicYear $academicYear)
+    {
+        if ($academicYear->schoolClasses()->exists()) {
+            return back()->with('error', 'Tahun ajaran tidak bisa dihapus karena masih memiliki kelas terkait.');
+        }
+
+        if ($academicYear->is_active) {
+            return back()->with('error', 'Tahun ajaran aktif tidak bisa dihapus.');
+        }
+
+        $name = $academicYear->name;
+        $academicYear->delete();
+
+        ActivityLog::record('ADMIN_AY_DELETED', "Admin menghapus tahun ajaran '{$name}'.", auth('web')->user());
+
+        return back()->with('success', 'Tahun ajaran berhasil dihapus.');
+    }
 }

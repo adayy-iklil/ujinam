@@ -54,6 +54,72 @@
         </div>
     </div>
 
+    <!-- Quick Shortcuts -->
+    <div>
+        <h3 class="text-sm font-bold text-slate-900 mb-3">Aksi Cepat</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <a href="{{ route('guru.exams.create') }}" class="group flex items-center gap-3 bg-white p-4 rounded-lg border border-slate-200 hover:border-blue-300 hover:shadow-sm transition">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-sm text-slate-900 group-hover:text-blue-700 truncate">Buat Ujian Baru</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">Buat & atur jadwal ujian baru</p>
+                </div>
+                <svg class="w-4 h-4 text-slate-300 shrink-0 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+
+            <a href="{{ route('guru.exams.index') }}" class="group flex items-center gap-3 bg-white p-4 rounded-lg border border-slate-200 hover:border-cyan-300 hover:shadow-sm transition">
+                <div class="w-9 h-9 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0 group-hover:bg-cyan-600 group-hover:text-white transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-sm text-slate-900 group-hover:text-cyan-700 truncate">Kelola Ujian & Soal</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">Atur soal, opsi & pengaturan ujian</p>
+                </div>
+                <svg class="w-4 h-4 text-slate-300 shrink-0 group-hover:text-cyan-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+
+            <a href="{{ route('guru.violations.index') }}" class="group flex items-center gap-3 bg-white p-4 rounded-lg border border-slate-200 hover:border-amber-300 hover:shadow-sm transition">
+                <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-white transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-sm text-slate-900 group-hover:text-amber-700 truncate">Monitoring Pelanggaran</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">Pantau kecurangan & sesi terkunci</p>
+                </div>
+                <svg class="w-4 h-4 text-slate-300 shrink-0 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+
+            <a href="{{ route('guru.results.index') }}" class="group flex items-center gap-3 bg-white p-4 rounded-lg border border-slate-200 hover:border-emerald-300 hover:shadow-sm transition">
+                <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-sm text-slate-900 group-hover:text-emerald-700 truncate">Hasil & Nilai Ujian</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">Rekap nilai & hasil peserta</p>
+                </div>
+                <svg class="w-4 h-4 text-slate-300 shrink-0 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+
     <!-- Recent Exams Table -->
     <div class="bg-white border border-slate-200 rounded-lg shadow-sm">
         <div class="p-4 border-b border-slate-200 flex items-center justify-between">

@@ -79,47 +79,50 @@
     <!-- Quick Shortcuts -->
     <div>
         <h3 class="text-sm font-bold text-slate-900 mb-3">Aksi Cepat</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <a href="{{ route('admin.students.import') }}" class="bg-white p-5 rounded-lg border border-slate-200 hover:border-blue-500 hover:shadow-md shadow-sm transition block group">
-                <div class="flex items-start gap-3">
-                    <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-blue-100 transition">
-                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-sm text-slate-900 group-hover:text-blue-700">Import Data Siswa (CSV)</h4>
-                        <p class="text-xs text-slate-500 mt-1">Upload file CSV master siswa baru dan pembagian kelas.</p>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <a href="{{ route('admin.students.import') }}" class="group flex items-center gap-3 bg-white p-4 rounded-lg border border-slate-200 hover:border-blue-300 hover:shadow-sm transition">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
                 </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-sm text-slate-900 group-hover:text-blue-700 truncate">Import Data Siswa (CSV)</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">Upload file CSV master siswa baru</p>
+                </div>
+                <svg class="w-4 h-4 text-slate-300 shrink-0 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
             </a>
 
-            <a href="{{ route('admin.teachers.create') }}" class="bg-white p-5 rounded-lg border border-slate-200 hover:border-blue-500 hover:shadow-md shadow-sm transition block group">
-                <div class="flex items-start gap-3">
-                    <div class="w-10 h-10 bg-violet-50 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-violet-100 transition">
-                        <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-sm text-slate-900 group-hover:text-blue-700">Tambah Akun Pengajar</h4>
-                        <p class="text-xs text-slate-500 mt-1">Buat kredensial login guru baru dan mata pelajaran yang diampu.</p>
-                    </div>
+            <a href="{{ route('admin.teachers.create') }}" class="group flex items-center gap-3 bg-white p-4 rounded-lg border border-slate-200 hover:border-violet-300 hover:shadow-sm transition">
+                <div class="w-9 h-9 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center shrink-0 group-hover:bg-violet-600 group-hover:text-white transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                    </svg>
                 </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-sm text-slate-900 group-hover:text-violet-700 truncate">Tambah Akun Pengajar</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">Buat kredensial login guru baru</p>
+                </div>
+                <svg class="w-4 h-4 text-slate-300 shrink-0 group-hover:text-violet-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
             </a>
 
-            <a href="{{ route('admin.logs.index') }}" class="bg-white p-5 rounded-lg border border-slate-200 hover:border-blue-500 hover:shadow-md shadow-sm transition block group">
-                <div class="flex items-start gap-3">
-                    <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-100 transition">
-                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-sm text-slate-900 group-hover:text-blue-700">Audit Trail System</h4>
-                        <p class="text-xs text-slate-500 mt-1">Pantau log aktivitas login, perubahan data, dan pelanggaran ujian.</p>
-                    </div>
+            <a href="{{ route('admin.logs.index') }}" class="group flex items-center gap-3 bg-white p-4 rounded-lg border border-slate-200 hover:border-emerald-300 hover:shadow-sm transition">
+                <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
                 </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-sm text-slate-900 group-hover:text-emerald-700 truncate">Audit Trail System</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 truncate">Pantau log aktivitas & pelanggaran</p>
+                </div>
+                <svg class="w-4 h-4 text-slate-300 shrink-0 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
             </a>
         </div>
     </div>

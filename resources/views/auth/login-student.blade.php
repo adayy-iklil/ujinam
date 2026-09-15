@@ -15,18 +15,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-slate-100 text-slate-900 antialiased min-h-screen flex flex-col justify-center items-center p-4">
+<body class="bg-slate-100 text-slate-900 antialiased min-h-screen flex flex-col justify-center items-center p-4 pb-8 sm:pb-4">
 
     <div class="w-full max-w-md">
         <!-- Institution Header Card -->
-        <div class="bg-blue-900 text-white p-6 rounded-t-lg shadow-sm text-center">
-            <img src="{{ asset('images/logo-smkn6jkt.png') }}" alt="Logo Sekolah" class="h-20 w-auto mx-auto mb-3">
-            <h1 class="text-xl font-bold tracking-tight">PORTAL UJIAN SISWA</h1>
+        <div class="bg-blue-900 text-white p-5 sm:p-6 rounded-t-lg shadow-sm text-center">
+            <img src="{{ asset('images/logo-smkn6jkt.png') }}" alt="Logo Sekolah" class="h-16 sm:h-20 w-auto mx-auto mb-2 sm:mb-3">
+            <h1 class="text-lg sm:text-xl font-bold tracking-tight">PORTAL UJIAN SISWA</h1>
             <p class="text-xs text-blue-200 mt-1">Sistem Ujian Berbasis Komputer — Ujinam</p>
         </div>
 
         <!-- Login Form Container -->
-        <div class="bg-white p-6 rounded-b-lg border-x border-b border-slate-200 shadow-sm">
+        <div class="bg-white p-5 sm:p-6 rounded-b-lg border-x border-b border-slate-200 shadow-sm">
             @if(session('error'))
                 <div class="mb-4 bg-rose-50 border border-rose-200 text-rose-800 text-xs px-3 py-2.5 rounded">
                     {{ session('error') }}
@@ -38,7 +38,7 @@
                 <div>
                     <label for="nis" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nomor Induk Siswa (NIS)</label>
                     <input type="text" id="nis" name="nis" value="{{ old('nis') }}" required autofocus placeholder="Masukkan NIS Anda"
-                        class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 font-mono @error('nis') border-rose-500 @enderror">
+                        class="w-full px-3.5 sm:px-3 py-3 sm:py-2 text-base sm:text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 font-mono @error('nis') border-rose-500 @enderror">
                     @error('nis')
                         <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
                     @enderror
@@ -47,14 +47,14 @@
                 <div>
                     <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Password</label>
                     <input type="password" id="password" name="password" required placeholder="Masukkan Password Anda"
-                        class="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 @error('password') border-rose-500 @enderror">
+                        class="w-full px-3.5 sm:px-3 py-3 sm:py-2 text-base sm:text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 @error('password') border-rose-500 @enderror">
                     @error('password')
                         <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm py-2.5 px-4 rounded-md transition shadow-sm">
+                    <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold text-base sm:text-sm py-3.5 sm:py-2.5 px-4 rounded-md transition shadow-sm">
                         Masuk Ruang Ujian
                     </button>
                 </div>

@@ -88,7 +88,7 @@ Route::middleware(['auth:web'])->prefix('admin')->name('admin.')->group(function
     Route::resource('classes', ClassController::class);
     Route::resource('majors', MajorController::class)->except(['create', 'edit', 'show']);
     
-    Route::resource('academic-years', AcademicYearController::class)->only(['index', 'store']);
+    Route::resource('academic-years', AcademicYearController::class)->except(['create', 'edit', 'show']);
     Route::post('/academic-years/{academicYear}/toggle-active', [AcademicYearController::class, 'toggleActive'])->name('academic-years.toggleActive');
 
     Route::resource('subjects', SubjectController::class)->except(['create', 'edit', 'show']);
