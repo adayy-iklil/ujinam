@@ -61,7 +61,7 @@
                             <td class="px-4 py-3 font-mono text-emerald-700 font-semibold">{{ $att->correct_answers }} Soal</td>
                             <td class="px-4 py-3 font-mono text-rose-600">{{ $att->wrong_answers }} Soal</td>
                             <td class="px-4 py-3 text-right font-mono font-extrabold text-sm text-blue-900 bg-blue-50/50">
-                                {{ number_format($att->score, 1) }}
+                                {{ number_format($att->score, 0) }}
                             </td>
                         </tr>
                     @empty

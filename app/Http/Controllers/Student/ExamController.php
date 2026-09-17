@@ -223,7 +223,7 @@ class ExamController extends Controller
     /**
      * Submit exam manually by student.
      */
-    public function submitExam(ExamAttempt $attempt)
+    public function submitExam(Request $request, ExamAttempt $attempt)
     {
         $student = Auth::guard('student')->user();
 
@@ -235,15 +235,43 @@ class ExamController extends Controller
             return redirect()->route('siswa.dashboard')->with('error', 'Ujian sudah diserahkan sebelumnya.');
         }
 
-        return $this->processSubmission($attempt, false);
+        return $this->processSubmission($attempt, false, $request);
     }
 
     /**
      * Internal server-side scoring & submission execution.
      */
-    protected function processSubmission(ExamAttempt $attempt, bool $autoExpired = false)
+    protected function processSubmission(ExamAttempt $attempt, bool $autoExpired = false, ?Request $request = null)
     {
-        DB::transaction(function () use ($attempt) {
+        DB::transaction(function () use ($attempt, $request) {
+            // Failsafe: Process answers submitted via request payload if any
+            if ($request) {
+                $submittedAnswers = [];
+                if ($request->filled('answers_payload')) {
+                    $decoded = json_decode($request->input('answers_payload'), true);
+                    if (is_array($decoded)) {
+                        $submittedAnswers = $decoded;
+                    }
+                } elseif ($request->filled('answers') && is_array($request->input('answers'))) {
+                    $submittedAnswers = $request->input('answers');
+                }
+
+                foreach ($submittedAnswers as $qId => $optId) {
+                    if ($qId && $optId) {
+                        StudentAnswer::updateOrCreate(
+                            [
+                                'attempt_id' => $attempt->id,
+                                'question_id' => $qId,
+                            ],
+                            [
+                                'selected_option_id' => $optId,
+                                'answered_at' => now(),
+                            ]
+                        );
+                    }
+                }
+            }
+
             $exam = $attempt->exam;
             $questions = $exam->questions()->with('options')->get();
             $answers = StudentAnswer::where('attempt_id', $attempt->id)->get()->keyBy('question_id');
@@ -270,7 +298,8 @@ class ExamController extends Controller
                 }
             }
 
-            $finalScore = $maxPossiblePoints > 0 ? round(($totalPointsEarned / $maxPossiblePoints) * 100, 2) : 0;
+            // Score formatted as whole number / integer (satuan tanpa koma)
+            $finalScore = $maxPossiblePoints > 0 ? (int) round(($totalPointsEarned / $maxPossiblePoints) * 100) : 0;
 
             $attempt->update([
                 'status' => 'submitted',
@@ -282,7 +311,7 @@ class ExamController extends Controller
 
             ActivityLog::record(
                 'STUDENT_EXAM_SUBMITTED',
-                "Siswa {$attempt->student->name} menyelesikan ujian '{$exam->title}' dengan nilai {$finalScore}.",
+                "Siswa {$attempt->student->name} menyelesaikan ujian '{$exam->title}' dengan nilai {$finalScore}.",
                 null,
                 $attempt->student
             );
@@ -309,6 +338,8 @@ class ExamController extends Controller
         if (!$attempt->exam->show_result) {
             return redirect()->route('siswa.dashboard')->with('error', 'Hasil ujian ini disembunyikan oleh pengawas.');
         }
+
+        $attempt->load(['exam.subject', 'exam.teacher', 'student.schoolClass']);
 
         return view('student.exam-result', compact('attempt'));
     }

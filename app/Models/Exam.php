@@ -50,6 +50,11 @@ class Exam extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function teacher(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     public function classes(): BelongsToMany
     {
         return $this->belongsToMany(SchoolClass::class, 'exam_classes', 'exam_id', 'class_id')->withTimestamps();

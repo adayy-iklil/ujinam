@@ -40,7 +40,7 @@
                             <td class="px-4 py-3 text-slate-500">{{ $att->started_at->format('d M, H:i') }} WIB</td>
                             <td class="px-4 py-3">
                                 @if($att->status === 'submitted')
-                                    <span class="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-200">SUBMITTED (Nilai: {{ $att->score }})</span>
+                                    <span class="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-200">SUBMITTED (Nilai: {{ (int) round($att->score) }})</span>
                                 @elseif($att->isLocked())
                                     <span class="bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded border border-rose-300 animate-pulse">LOCKED (TERKUNCI)</span>
                                 @else

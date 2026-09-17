@@ -115,6 +115,7 @@
     <!-- Submission Hidden Form -->
     <form id="exam-submit-form" action="{{ route('siswa.attempts.submit', $attempt->id) }}" method="POST" class="hidden">
         @csrf
+        <input type="hidden" name="answers_payload" id="answers_payload" value="">
     </form>
 
     <!-- Confirmation Finish Modal -->
@@ -178,6 +179,10 @@
                 @endforeach
             },
 
+            init() {
+                window.cbtGetAnswers = () => this.answers;
+            },
+
             get currentQuestion() {
                 return this.questions[this.currentIndex] || {};
             },
@@ -192,11 +197,15 @@
 
             selectAnswer(questionId, optionId) {
                 this.answers[questionId] = optionId;
-                // Dispatch to parent examEngine layout Alpine instance
-                if (window.Alpine) {
-                    const engine = this.$data;
-                    // Access global examEngine scope saveAnswer method
-                    this.$root.closest('[x-data]').__x.$data.saveAnswer(questionId, optionId);
+
+                // Priority 1: Call global layout function if available
+                if (typeof window.cbtSaveAnswer === 'function') {
+                    window.cbtSaveAnswer(questionId, optionId);
+                } else {
+                    // Priority 2: Dispatch event to window
+                    window.dispatchEvent(new CustomEvent('save-answer', {
+                        detail: { questionId: questionId, optionId: optionId }
+                    }));
                 }
             },
 
@@ -217,6 +226,10 @@
             },
 
             confirmSubmit() {
+                const payloadInput = document.getElementById('answers_payload');
+                if (payloadInput) {
+                    payloadInput.value = JSON.stringify(this.answers);
+                }
                 document.getElementById('exam-submit-form').submit();
             }
         }

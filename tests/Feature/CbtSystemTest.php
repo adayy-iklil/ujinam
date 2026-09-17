@@ -202,9 +202,54 @@ class CbtSystemTest extends TestCase
 
         $attempt->refresh();
         $this->assertEquals('submitted', $attempt->status);
-        $this->assertEquals(50.0, $attempt->score);
+        $this->assertEquals(50, $attempt->score);
         $this->assertEquals(1, $attempt->correct_answers);
         $this->assertEquals(1, $attempt->wrong_answers);
+
+        // Verify result view renders
+        $resultRes = $this->get("/siswa/attempts/{$attempt->id}/result");
+        $resultRes->assertStatus(200);
+        $resultRes->assertSee('Nilai Akhir Ujian');
+        $resultRes->assertSee('50');
+    }
+
+    public function test_student_answers_payload_fallback_on_submission_grades_correctly()
+    {
+        $this->actingAs($this->student, 'student');
+
+        $attempt = ExamAttempt::create([
+            'exam_id' => $this->exam->id,
+            'student_id' => $this->student->id,
+            'started_at' => now(),
+            'expires_at' => now()->addMinutes(60),
+            'status' => 'in_progress',
+        ]);
+
+        $questions = $this->exam->questions()->with('options')->get();
+        $q1CorrectOpt = $questions[0]->options()->where('is_correct', true)->first();
+        $q2CorrectOpt = $questions[1]->options()->where('is_correct', true)->first();
+
+        // Submit directly with answers_payload (simulating when autosave was bypassed or offline)
+        $response = $this->post("/siswa/attempts/{$attempt->id}/submit", [
+            'answers_payload' => json_encode([
+                $questions[0]->id => $q1CorrectOpt->id,
+                $questions[1]->id => $q2CorrectOpt->id,
+            ]),
+        ]);
+
+        $response->assertRedirect("/siswa/attempts/{$attempt->id}/result");
+
+        $attempt->refresh();
+        $this->assertEquals('submitted', $attempt->status);
+        $this->assertEquals(100, $attempt->score);
+        $this->assertEquals(2, $attempt->correct_answers);
+        $this->assertEquals(0, $attempt->wrong_answers);
+
+        // Verify result view renders 100
+        $resultRes = $this->get("/siswa/attempts/{$attempt->id}/result");
+        $resultRes->assertStatus(200);
+        $resultRes->assertSee('100');
+        $resultRes->assertSee('TUNTAS');
     }
 
     public function test_teacher_can_unlock_and_reset_locked_student()

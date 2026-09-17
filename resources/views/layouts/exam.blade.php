@@ -18,7 +18,7 @@
         body { font-family: 'Inter', sans-serif; user-select: none; }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900 antialiased min-h-screen flex flex-col" x-data="examEngine()">
+<body class="bg-slate-100 text-slate-900 antialiased min-h-screen flex flex-col" x-data="examEngine()" @save-answer.window="saveAnswer($event.detail.questionId, $event.detail.optionId)">
 
     <!-- CBT Minimal Exam Top Header -->
     <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow">
@@ -93,6 +93,10 @@
                 violationMessage: '',
 
                 init() {
+                    window.cbtSaveAnswer = (questionId, optionId) => {
+                        this.saveAnswer(questionId, optionId);
+                    };
+
                     this.updateTimer();
                     this.timerInterval = setInterval(() => this.updateTimer(), 1000);
 
@@ -205,7 +209,16 @@
 
                 autoSubmit() {
                     alert('Waktu ujian telah habis. Sesi Anda akan otomatis dikirimkan.');
-                    document.getElementById('exam-submit-form').submit();
+                    if (window.cbtGetAnswers) {
+                        const payloadInput = document.getElementById('answers_payload');
+                        if (payloadInput) {
+                            payloadInput.value = JSON.stringify(window.cbtGetAnswers());
+                        }
+                    }
+                    const submitForm = document.getElementById('exam-submit-form');
+                    if (submitForm) {
+                        submitForm.submit();
+                    }
                 }
             }
         }
