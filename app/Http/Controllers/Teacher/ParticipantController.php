@@ -60,9 +60,17 @@ class ParticipantController extends Controller
         $actionType = $request->input('action_type', 'unlock'); // 'unlock' or 'full_reset'
 
         if ($actionType === 'full_reset') {
-            // Full reset: delete answers and reset attempt state
+            // Full reset: delete answers and reset attempt state with fresh time
+            $startedAt = now();
+            $expiresAt = (clone $startedAt)->addMinutes($attempt->exam->duration_minutes);
+            if ($expiresAt->greaterThan($attempt->exam->end_at)) {
+                $expiresAt = $attempt->exam->end_at;
+            }
+
             $attempt->answers()->delete();
             $attempt->update([
+                'started_at' => $startedAt,
+                'expires_at' => $expiresAt,
                 'status' => 'in_progress',
                 'submitted_at' => null,
                 'score' => null,
@@ -82,12 +90,24 @@ class ParticipantController extends Controller
             return back()->with('success', "Sesi ujian siswa {$attempt->student->name} berhasil di-reset sepenuhnya.");
         } else {
             // Unlock & reset violation counter
-            $attempt->update([
+            $updates = [
                 'status' => 'in_progress',
                 'violation_count' => 0,
                 'reset_by' => $user->id,
                 'reset_at' => now(),
-            ]);
+            ];
+
+            // If time expired while locked, grant extra grace period to allow student to finish
+            if ($attempt->expires_at->lessThanOrEqualTo(now())) {
+                $graceMinutes = min(15, $attempt->exam->duration_minutes);
+                $newExpiry = now()->addMinutes($graceMinutes);
+                if ($newExpiry->greaterThan($attempt->exam->end_at)) {
+                    $newExpiry = $attempt->exam->end_at;
+                }
+                $updates['expires_at'] = $newExpiry;
+            }
+
+            $attempt->update($updates);
 
             ActivityLog::record(
                 'TEACHER_UNLOCK_STUDENT',

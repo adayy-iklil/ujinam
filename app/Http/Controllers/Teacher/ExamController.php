@@ -155,6 +155,11 @@ class ExamController extends Controller
         $this->authorizeExamAccess($exam);
 
         $newStatus = $exam->status === 'published' ? 'draft' : 'published';
+
+        if ($newStatus === 'published' && $exam->questions()->count() === 0) {
+            return back()->with('error', 'Tidak dapat mempublikasikan ujian tanpa butir soal. Silakan tambahkan minimal 1 soal terlebih dahulu.');
+        }
+
         $exam->update(['status' => $newStatus]);
 
         return back()->with('success', "Status ujian diubah menjadi " . strtoupper($newStatus));

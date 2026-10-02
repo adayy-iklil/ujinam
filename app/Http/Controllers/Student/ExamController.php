@@ -49,6 +49,10 @@ class ExamController extends Controller
             return redirect()->route('siswa.dashboard')->with('error', 'Ujian belum aktif atau tidak tersedia.');
         }
 
+        if ($exam->questions()->count() === 0) {
+            return redirect()->route('siswa.dashboard')->with('error', 'Ujian ini belum memiliki butir soal.');
+        }
+
         $existingAttempt = ExamAttempt::where('exam_id', $exam->id)
             ->where('student_id', $student->id)
             ->first();

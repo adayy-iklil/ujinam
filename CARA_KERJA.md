@@ -1,4 +1,4 @@
-﻿# Ujinam — Cara Kerja Sistem CBT Ujian Sekolah
+# Ujinam — Cara Kerja Sistem CBT Ujian Sekolah
 
 > **Versi:** 1.0 | **Stack:** Laravel 11 · MySQL · Blade · Tailwind CSS · Alpine.js
 
@@ -246,41 +246,39 @@ php artisan serve
 
 ---
 
-## Akun Default
+## Akun & Kredensial Resmi
 
-> Password semua akun: **`password`**
+> **Satu Password Untuk Semua Akun (Siswa, Guru, Superadmin)**: **`Rahasia6#`**
 
-| Peran        | Login di       | Kredensial                       |
-|--------------|----------------|----------------------------------|
-| Superadmin   | `/login`       | username: `superadmin`           |
-| Guru Budi    | `/login`       | username: `budi`                 |
-| Guru Siti    | `/login`       | username: `siti`                 |
-| Siswa XI RPL | `/siswa/login` | NIS: `2401001` s/d `2401005`     |
-| Siswa XII RPL| `/siswa/login` | NIS: `2301001` s/d `2301003`     |
+Cara login cukup mengganti kata **`siswa`** pada URL domain:
 
-> PENTING: Ganti semua password default sebelum digunakan di produksi!
+| Peran | URL Akses di Browser | ID / Username | Password |
+|---|---|---|---|
+| **Siswa** | `http://localhost:8000/siswa` *(atau `/siswa/login`)* | **NIS Siswa** *(cth: `20570`, `20240`)* | **`Rahasia6#`** |
+| **Guru** | `http://localhost:8000/guru` *(atau `/guru/login`)* | `budi` / `siti` | **`Rahasia6#`** |
+| **Superadmin** | `http://localhost:8000/admin` *(atau `/admin/login`)* | `superadmin` | **`Rahasia6#`** |
+
+*Catatan: Total 646 siswa riil SMKN 6 Jakarta terdaftar di database dengan password seragam `Rahasia6#`.*
 
 ---
 
-## URL Penting
+## URL Penting Sistem
 
-| Halaman                  | URL                                    | Akses      |
-|--------------------------|----------------------------------------|------------|
-| Redirect utama           | `/`                                    | Semua      |
-| Login Siswa              | `/siswa/login`                         | Publik     |
-| Login Guru/Admin         | `/login`                               | Publik     |
-| Dashboard Siswa          | `/siswa/dashboard`                     | Siswa      |
-| Kerjakan Ujian           | `/siswa/attempts/{attempt}`            | Siswa      |
-| Hasil Ujian              | `/siswa/attempts/{attempt}/result`     | Siswa      |
-| Dashboard Guru           | `/guru/dashboard`                      | Guru       |
-| Buat Ujian               | `/guru/exams/create`                   | Guru       |
-| Soal Ujian               | `/guru/exams/{exam}/questions`         | Guru       |
-| Monitor Peserta          | `/guru/exams/{exam}/participants`      | Guru       |
-| Dashboard Admin          | `/admin/dashboard`                     | Superadmin |
-| Manajemen Siswa          | `/admin/students`                      | Superadmin |
-| Import Siswa             | `/admin/students/import`               | Superadmin |
-| Kenaikan Kelas           | `/admin/promotion`                     | Superadmin |
-| Audit Log                | `/admin/logs`                          | Superadmin |
+| Halaman | URL Akses | Hak Akses |
+|---|---|---|
+| Login Siswa | `/siswa` atau `/siswa/login` | Siswa |
+| Login Guru | `/guru` atau `/guru/login` | Guru |
+| Login Superadmin | `/admin` atau `/admin/login` | Superadmin |
+| Dashboard Siswa | `/siswa/dashboard` | Siswa |
+| Kerjakan Ujian | `/siswa/attempts/{attempt}` | Siswa |
+| Hasil Ujian | `/siswa/attempts/{attempt}/result` | Siswa |
+| Dashboard Guru | `/guru/dashboard` | Guru |
+| Bank Soal & Ujian | `/guru/exams` | Guru |
+| Monitoring Peserta | `/guru/exams/{exam}/participants` | Guru |
+| Dashboard Admin | `/admin/dashboard` | Superadmin |
+| Manajemen Siswa | `/admin/students` | Superadmin |
+| Kenaikan Kelas | `/admin/promotion` | Superadmin |
+| Audit Log | `/admin/logs` | Superadmin |
 
 ---
 

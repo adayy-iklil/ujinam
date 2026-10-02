@@ -39,7 +39,16 @@ class QuestionController extends Controller
             'points' => 'required|numeric|min:0.1',
             'options' => 'required|array|min:2',
             'options.*' => 'required|string',
-            'correct_option' => 'required|in:A,B,C,D,E',
+            'correct_option' => [
+                'required',
+                'in:A,B,C,D,E',
+                function ($attribute, $value, $fail) use ($request) {
+                    $options = $request->input('options', []);
+                    if (!isset($options[$value]) || trim((string)$options[$value]) === '') {
+                        $fail('Pilihan kunci jawaban benar (' . $value . ') harus memiliki teks.');
+                    }
+                }
+            ],
         ], [
             'question_text.required' => 'Teks pertanyaan wajib diisi.',
             'points.required' => 'Bobot poin wajib diisi.',
@@ -94,7 +103,16 @@ class QuestionController extends Controller
             'points' => 'required|numeric|min:0.1',
             'options' => 'required|array|min:2',
             'options.*' => 'required|string',
-            'correct_option' => 'required|in:A,B,C,D,E',
+            'correct_option' => [
+                'required',
+                'in:A,B,C,D,E',
+                function ($attribute, $value, $fail) use ($request) {
+                    $options = $request->input('options', []);
+                    if (!isset($options[$value]) || trim((string)$options[$value]) === '') {
+                        $fail('Pilihan kunci jawaban benar (' . $value . ') harus memiliki teks.');
+                    }
+                }
+            ],
         ]);
 
         DB::transaction(function () use ($question, $validated) {

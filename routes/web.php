@@ -31,14 +31,29 @@ Route::get('/', function () {
     return redirect()->route('siswa.login');
 });
 
-// Authentication Routes
+// Authentication Routes - General & Backward Compatibility
 Route::get('/login', [LoginController::class, 'showUserLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'loginUser']);
 Route::post('/logout', [LoginController::class, 'logoutUser'])->name('logout');
 
+// 1. Portal Siswa (http://domain/siswa atau http://domain/siswa/login)
+Route::get('/siswa', fn() => redirect()->route('siswa.login'));
 Route::get('/siswa/login', [LoginController::class, 'showStudentLoginForm'])->name('siswa.login');
 Route::post('/siswa/login', [LoginController::class, 'loginStudent']);
 Route::post('/siswa/logout', [LoginController::class, 'logoutStudent'])->name('siswa.logout');
+
+// 2. Portal Guru (http://domain/guru atau http://domain/guru/login)
+Route::get('/guru', fn() => redirect()->route('guru.login'));
+Route::get('/guru/login', [LoginController::class, 'showGuruLoginForm'])->name('guru.login');
+Route::post('/guru/login', [LoginController::class, 'loginUser']);
+Route::post('/guru/logout', [LoginController::class, 'logoutUser'])->name('guru.logout');
+
+// 3. Portal Superadmin / Administrator (http://domain/admin atau http://domain/admin/login)
+Route::get('/admin', fn() => redirect()->route('admin.login'));
+Route::get('/admin/login', [LoginController::class, 'showAdminLoginForm'])->name('admin.login');
+Route::post('/admin/login', [LoginController::class, 'loginUser']);
+Route::get('/superadmin', fn() => redirect()->route('admin.login'));
+Route::get('/superadmin/login', fn() => redirect()->route('admin.login'))->name('superadmin.login');
 
 // Student Routes
 Route::middleware(['auth:student'])->prefix('siswa')->name('siswa.')->group(function () {
